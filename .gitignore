@@ -2,3 +2,4 @@ venv
 .idea
 .vscode
 export
+jira_worklog_output.csv

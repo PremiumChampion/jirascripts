@@ -1,16 +1,21 @@
 # This is a sample Python script.
-import csv
 
+import csv
 from jira import JIRA
 
-auth_jira = JIRA(server="",  # fill in url of your jira instance
-                 basic_auth=('username', 'password'))  # fill in your username and password
+
+auth_jira = JIRA(server="https://jira-student.it.hs-heilbronn.de",  # fill in url of your jira instance
+                 basic_auth=('', ''))  # fill in your username and password
+
+
+
 # fill in the project key found in the URL
 # {instanceurl}/projects/{projectkey}/....
 projectname = ""
 
 # base filename for the output worklogs will be exported to this file
 base_filename = "jira_worklog_output"
+
 
 
 def export_jira_issues():
@@ -22,6 +27,7 @@ def export_jira_issues():
     i = 1
     for issue in issues:
         print(f"getting worklogs for issue {i} from {issue_count}")
+        i = i + 1
         worklogs = auth_jira.worklogs(issue.id)
         for worklog in worklogs:
             output.append({
@@ -31,7 +37,8 @@ def export_jira_issues():
                 "timeSpent": worklog.timeSpent,
                 "timeSpentSeconds": worklog.timeSpentSeconds,
                 "name": issue.fields.summary,
-                "started": worklog.started
+                "started": worklog.started,
+                # "path": worklog.
             })
     # uncomment to write export worklogs as json
     # with open(f"{base_filename}.json", "w") as file:
